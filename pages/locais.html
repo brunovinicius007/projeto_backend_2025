@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Locais</title>
+    <link rel="stylesheet" href="../styles/root.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link rel="stylesheet" href="../styles/locais.css">
+</head>
+<body>
+    <header>
+        <h1>Painel de Administração</h1>
+        <nav>
+            <a href="admin.html">Voltar</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Seção de Locais -->
+        <section id="locais">
+            <h2>Gerenciar Locais</h2>
+            <form id="form-local">
+                <input type="hidden" id="local-id">
+                <input type="text" id="local-endereco" placeholder="Endereço do Local" required>
+                <input type="number" id="local-capacidade" placeholder="Capacidade" required>
+                <button type="submit">Salvar Local</button>
+            </form>
+            <div id="lista-locais"></div>
+        </section>
+    </main>
+
+    <script src="../scripts/locais.js"></script>
+</body>
+</html>

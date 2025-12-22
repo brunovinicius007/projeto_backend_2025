@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - IFTicket</title>
+    <link rel="stylesheet" href="../styles/root.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <header>
+        <h1>Painel de Administração</h1>
+        <nav>
+            <a href="../index.html">Início</a>
+            <a href="locais.html">Gerenciar Locais</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Seção de Eventos -->
+        <section id="eventos">
+            <h2>Gerenciar Eventos</h2>
+            <form id="form-evento">
+                <input type="hidden" id="evento-id">
+                <input type="text" id="evento-nome" placeholder="Nome do Evento" required>
+                <input type="datetime-local" id="evento-data-inicio" title="Início do Evento" required>
+                <input type="datetime-local" id="evento-data-fim" title="Fim do Evento" required>
+                <select id="evento-local-id" required></select>
+                <textarea id="evento-descricao" placeholder="Descrição do Evento"></textarea>
+                <textarea id="evento-politica" placeholder="Política de Cancelamento"></textarea>
+                <button type="submit">Salvar Evento</button>
+            </form>
+            <div id="lista-eventos"></div>
+        </section>
+
+        <!-- Seção de Setores -->
+        <section id="setores">
+            <h2>Gerenciar Setores</h2>
+            <form id="form-setor">
+                <input type="hidden" id="setor-id">
+                <select id="setor-evento-id" required></select>
+                <input type="text" id="setor-nome" placeholder="Nome do Setor" required>
+                <input type="number" id="setor-capacidade" placeholder="Capacidade" required>
+                <button type="submit">Salvar Setor</button>
+            </form>
+            <div id="lista-setores"></div>
+        </section>
+
+        <!-- Seção de Lotes -->
+        <section id="lotes">
+            <h2>Gerenciar Lotes</h2>
+            <form id="form-lote">
+                <input type="hidden" id="lote-id">
+                <select id="lote-setor-id" required></select>
+                <input type="number" step="0.01" id="lote-preco" placeholder="Preço" required>
+                <input type="number" id="lote-quantidade" placeholder="Quantidade" required>
+                <input type="datetime-local" id="lote-vigencia-ini" title="Início da Vigência">
+                <input type="datetime-local" id="lote-vigencia-fim" title="Fim da Vigência">
+                <button type="submit">Salvar Lote</button>
+            </form>
+            <div id="lista-lotes"></div>
+        </section>
+    </main>
+
+    <script src="../scripts/admin.js"></script>
+</body>
+</html>

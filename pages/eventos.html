@@ -1,28 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos</title>
-    <link rel="stylesheet" href="../styles/root.css">
-</head>
-<body>
-    <h1>Eventos</h1>
-    <div id="eventos-list"></div>
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos - IFTickets</title>
+    <link rel="stylesheet" href="../styles/root.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/eventos.css" />
 
-    <h2>Criar Novo Evento</h2>
-    <form id="create-evento-form">
-        <input type="text" name="nome" placeholder="Nome do Evento" required>
-        <input type="number" name="organizacao_id" placeholder="ID da Organização" required>
-        <input type="number" name="local_id" placeholder="ID do Local" required>
-        <textarea name="descricao" placeholder="Descrição"></textarea>
-        <input type="text" name="status" placeholder="Status" value="rascunho">
-        <textarea name="politica_cancelamento" placeholder="Política de Cancelamento"></textarea>
-        <input type="datetime-local" name="data_inicio">
-        <input type="datetime-local" name="data_fim">
-        <button type="submit">Criar Evento</button>
-    </form>
-
-    <script src="../scripts/eventos.js"></script>
-</body>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+    <script src="../scripts/eventos.js" defer></script>
+  </head>
+  <body>
+    <main class="main">
+      <h1 class="logo"><a href="../index.html"><i class="contrast-logo">IF</i>TICKETS</a></h1>
+      <h2 class="title">
+        EXPLORE NOSSOS <i class="contrast">EVENTOS</i>
+      </h2>
+      
+      <div id="eventos-container" class="eventos-grid">
+        <!-- Event cards will be inserted here by JavaScript -->
+      </div>
+    </main>
+  </body>
 </html>

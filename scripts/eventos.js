@@ -1,57 +1,61 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const eventosList = document.getElementById('eventos-list');
-    const createEventoForm = document.getElementById('create-evento-form');
-
+    const eventosContainer = document.getElementById('eventos-container');
     const API_URL = '../src/api/eventos.php';
 
-    function fetchEventos() {
-        fetch(API_URL)
-            .then(response => response.json())
-            .then(data => {
-                eventosList.innerHTML = '';
-                if (data.records) {
-                    data.records.forEach(evento => {
-                        const eventoDiv = document.createElement('div');
-                        eventoDiv.innerHTML = `
-                            <h3>${evento.nome}</h3>
-                            <p>${evento.descricao}</p>
-                            <p><strong>Início:</strong> ${evento.data_inicio}</p>
-                            <p><strong>Fim:</strong> ${evento.data_fim}</p>
-                        `;
-                        eventosList.appendChild(eventoDiv);
-                    });
-                } else {
-                    eventosList.innerHTML = '<p>Nenhum evento encontrado.</p>';
+    async function fetchEventos() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                 if (response.status === 404) {
+                    eventosContainer.innerHTML = '<p style="color: white; text-align: center;">Nenhum evento agendado no momento.</p>';
+                    return;
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching events:', error);
-                eventosList.innerHTML = '<p>Erro ao carregar eventos.</p>';
-            });
+                throw new Error('Erro de rede ao buscar eventos');
+            }
+            const eventos = await response.json();
+            
+            eventosContainer.innerHTML = '';
+            if (eventos && eventos.length > 0) {
+                eventos.forEach(evento => {
+                    const card = createEventoCard(evento);
+                    eventosContainer.appendChild(card);
+                });
+            } else {
+                eventosContainer.innerHTML = '<p style="color: white; text-align: center;">Nenhum evento agendado no momento.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            eventosContainer.innerHTML = '<p style="color: white; text-align: center;">Ocorreu um erro ao carregar os eventos. Tente novamente mais tarde.</p>';
+        }
     }
 
-    createEventoForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(createEventoForm);
-        const data = Object.fromEntries(formData.entries());
+    function createEventoCard(evento) {
+        const card = document.createElement('div');
+        card.className = 'evento-card';
 
-        fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            fetchEventos();
-            createEventoForm.reset();
-        })
-        .catch(error => {
-            console.error('Error creating event:', error);
-        });
-    });
+        // Formata a data para dd/mm/yyyy
+        const data = new Date(evento.data_inicio);
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+
+        card.innerHTML = `
+            <div class="evento-card-banner">
+                <span>${evento.nome.split(' ').slice(0, 3).join(' ')}</span>
+            </div>
+            <div class="evento-card-content">
+                <h3>${evento.nome}</h3>
+                <p><i class="ph ph-calendar"></i> ${dataFormatada}</p>
+                <p><i class="ph ph-map-pin"></i> ${evento.endereco || 'Local a definir'}</p>
+                <p><i class="ph ph-info"></i> ${evento.descricao || 'Sem descrição.'}</p>
+                <div class="evento-card-actions">
+                    <a href="#" class="button">Comprar Ingresso</a>
+                </div>
+            </div>
+        `;
+        return card;
+    }
 
     fetchEventos();
 });
